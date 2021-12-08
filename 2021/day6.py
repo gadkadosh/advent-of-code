@@ -29,32 +29,28 @@ def calc_state_after(old_state: FishState, iterations: int) -> FishState:
     return middle_state
 
 
-def cycle_day(table):
-    new_table = {}
-    for i in range(10):
-        new_table[i] = 0
+def cycle_day(state):
+    new_state = create_state_table()
 
-    for i in table:
-        if i == 0:
-            new_table[6] = table[i]
-            new_table[8] = table[i]
-        if i > 0:
-            new_table[i - 1] = new_table[i - 1] + table[i]
+    new_state[6] = state[0]
+    new_state[8] = state[0]
+    for i in range(1, AGES):
+        new_state[i - 1] += state[i]
 
-    return new_table
+    return new_state
 
 
 def create_state_table():
-    table = {}
-    for i in range(AGES):
-        table[i] = 0
-    return table
+    state = []
+    for _ in range(AGES):
+        state.append(0)
+    return state
 
 
-def count_fish(table):
+def count_fish(state):
     sum = 0
-    for i in table:
-        sum += table[i]
+    for i in state:
+        sum += i
     return sum
 
 
